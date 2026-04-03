@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Personal Fitness Blueprint</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f3ee;
+    --accent: #e8533c;
+    --accent2: #f0a500;
+    --green: #2a9d5c;
+    --red: #d63030;
+    --gray: #1e1e1e;
+    --gray2: #2c2c2c;
+    --muted: #888;
+    --text: #e8e6e0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  /* HEADER */
+  .header {
+    background: var(--accent);
+    padding: 28px 32px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: 'GAINS';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 160px;
+    color: rgba(0,0,0,0.12);
+    right: -10px;
+    top: -20px;
+    letter-spacing: -4px;
+    line-height: 1;
+  }
+  .header-left h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: #fff;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+  .header-left p {
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+    margin-top: 4px;
+    font-weight: 300;
+  }
+  .header-stats {
+    display: flex;
+    gap: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .stat {
+    text-align: right;
+  }
+  .stat-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .stat-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.65);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* LAYOUT */
+  .main { padding: 24px 28px; display: grid; gap: 20px; }
+
+  /* SECTION TITLE */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .section-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 1.5px;
+    color: var(--white);
+  }
+  .section-header .tag {
+    font-size: 10px;
+    font-family: 'Space Mono', monospace;
+    background: var(--gray2);
+    color: var(--muted);
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+  }
+
+  /* DAY CARDS */
+  .days-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .day-card {
+    background: var(--gray);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #2a2a2a;
+  }
+  .day-top {
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .day-top.push { background: linear-gradient(135deg, #c0392b22, #e8533c22); border-bottom: 1px solid #e8533c33; }
+  .day-top.pull { background: linear-gradient(135deg, #1a6b8a22, #2980b922); border-bottom: 1px solid #2980b933; }
+  .day-top.legs { background: linear-gradient(135deg, #1a6b3a22, #27ae6022); border-bottom: 1px solid #27ae6033; }
+  .day-top.core { background: linear-gradient(135deg, #7d4a0022, #f0a50022); border-bottom: 1px solid #f0a50033; }
+  .day-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--muted);
+    line-height: 1;
+  }
+  .day-info h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: var(--white);
+    text-align: right;
+  }
+  .day-info p {
+    font-size: 10px;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 1px;
+  }
+  .exercise-list {
+    padding: 10px 16px 14px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .exercise-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    background: #252525;
+    border-radius: 6px;
+    font-size: 12.5px;
+  }
+  .ex-name { color: var(--white); font-weight: 400; }
+  .ex-sets {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent2);
+    white-space: nowrap;
+    margin-left: 8px;
+  }
+
+  /* EXERCISE VISUAL GUIDE */
+  .exercise-visuals {
+    background: var(--gray);
+    border-radius: 10px;
+    border: 1px solid #2a2a2a;
+    padding: 18px;
+  }
+  .ex-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 4px;
+  }
+  .ex-card {
+    background: #252525;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+  }
+  .ex-figure {
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: #111;
+  }
+  .ex-figure iframe {
+    width: 100%;
+    height: 200%;
+    margin-top: -35%;
+    border: none;
+    pointer-events: none;
+  }
+  .ex-card-label {
+    padding: 8px 8px;
+    border-top: 1px solid #2a2a2a;
+  }
+  .ex-card-label .name {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.3;
+  }
+  .ex-card-label .muscle {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .muscle-tag {
+    display: inline-block;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-top: 4px;
+    font-family: 'Space Mono', monospace;
+  }
+  .tag-chest { background: #e8533c22; color: #e8533c; }
+  .tag-shoulder { background: #2980b922; color: #5dade2; }
+  .tag-tricep { background: #8e44ad22; color: #a569bd; }
+  .tag-back { background: #1a5276aa; color: #85c1e9; }
+  .tag-bicep { background: #0e6655aa; color: #48c9b0; }
+  .tag-legs { background: #1d6a2faa; color: #52be80; }
+  .tag-core { background: #7d600022; color: #f0a500; }
+
+  /* DO / DON'T */
+  .dos-donts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .do-card, .dont-card {
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid transparent;
+  }
+  .do-card {
+    background: #0d2e1a;
+    border-color: #1e6b3a44;
+  }
+  .dont-card {
+    background: #2e0d0d;
+    border-color: #6b1e1e44;
+  }
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .card-head .icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .do-card .icon { background: var(--green); color: #fff; }
+  .dont-card .icon { background: var(--red); color: #fff; }
+  .card-head h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+  .do-card .card-head h3 { color: #52be80; }
+  .dont-card .card-head h3 { color: #e74c3c; }
+  .rule-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .rule-list li {
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    line-height: 1.4;
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+  }
+  .do-card .rule-list li { background: #0f3d22; color: #a9dfbf; }
+  .dont-card .rule-list li { background: #3d0f0f; color: #f1948a; }
+  .rule-list li::before {
+    font-weight: 700;
+    font-size: 12px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  .do-card .rule-list li::before { content: '✓'; color: var(--green); }
+  .dont-card .rule-list li::before { content: '✗'; color: var(--red); }
+
+  /* SHOULDER WARNING */
+  .shoulder-warn {
+    background: #2a1a00;
+    border: 1px solid #f0a50033;
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .warn-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .warn-content h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    color: var(--accent2);
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .warn-list { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
+  .warn-list li {
+    font-size: 11.5px;
+    background: #3a2200;
+    color: #f0c080;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid #f0a50022;
+  }
+
+  /* NUTRITION */
+  .nutrition {
+    background: var(--gray);
+    border-radius: 10px;
+    border: 1px solid #2a2a2a;
+    padding: 18px;
+  }
+  .macro-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .macro-card {
+    background: #1e1e1e;
+    border-radius: 8px;
+    padding: 12px 10px;
+    text-align: center;
+  }
+  .macro-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .macro-name { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .macro-val.cal { color: var(--accent); }
+  .macro-val.pro { color: #48c9b0; }
+  .macro-val.carb { color: var(--accent2); }
+  .macro-val.fat { color: #a569bd; }
+
+  .meal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .meal-card {
+    background: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .meal-time {
+    padding: 7px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: #fff;
+    font-weight: 700;
+  }
+  .meal-time.breakfast { background: #b7410033; border-bottom: 1px solid #b7410055; color: #f0a500; }
+  .meal-time.lunch { background: #0d5c2233; border-bottom: 1px solid #0d5c2255; color: #52be80; }
+  .meal-time.pre { background: #1a2a4a33; border-bottom: 1px solid #1a2a4a55; color: #5dade2; }
+  .meal-time.post { background: #3a1a4a33; border-bottom: 1px solid #3a1a4a55; color: #a569bd; }
+  .meal-time.dinner { background: #4a1a0033; border-bottom: 1px solid #4a1a0055; color: #e8533c; }
+  .meal-time.snack { background: #2a2a0033; border-bottom: 1px solid #2a2a0055; color: #ccc; }
+  .meal-items {
+    padding: 10px 12px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .meal-items li {
+    font-size: 12px;
+    color: #ccc;
+    display: flex;
+    justify-content: space-between;
+  }
+  .meal-items li span { color: var(--muted); font-size: 11px; }
+
+  .food-avoid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .avoid-tag {
+    background: #2e0d0d;
+    color: #e74c3c;
+    border: 1px solid #6b1e1e44;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+  .eat-tag {
+    background: #0d2e1a;
+    color: #52be80;
+    border: 1px solid #1e6b3a44;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+
+  /* FLEXIBILITY */
+  .flex-section {
+    background: var(--gray);
+    border-radius: 10px;
+    border: 1px solid #2a2a2a;
+    padding: 18px;
+  }
+  .flex-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .flex-item {
+    background: #1e1e1e;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+  .flex-item .stretch-icon { font-size: 28px; margin-bottom: 6px; }
+  .flex-item .stretch-name { font-size: 11px; color: var(--white); font-weight: 500; }
+  .flex-item .stretch-time { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+  /* PROGRESS */
+  .progress-section {
+    background: var(--gray);
+    border-radius: 10px;
+    border: 1px solid #2a2a2a;
+    padding: 18px;
+  }
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+    margin-top: 6px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--green));
+  }
+  .timeline-item {
+    text-align: center;
+    padding: 0 8px;
+    position: relative;
+  }
+  .timeline-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin: 15px auto 10px;
+    border: 2px solid var(--black);
+    position: relative;
+    z-index: 1;
+  }
+  .timeline-dot.w4 { background: var(--accent2); }
+  .timeline-dot.w8 { background: var(--green); }
+  .timeline-dot.w12 { background: #5dade2; }
+  .timeline-week {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+  .timeline-result {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: #111;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #222;
+  }
+  .footer p {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+  }
+  .footer .accent { color: var(--accent); }
+
+  .divider { height: 1px; background: #222; margin: 4px 0 14px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .sub-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 8px;
+    margin-top: 16px;
+  }
+  /* CALORIE CALC */
+  .calc-box {
+    background: #111;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    font-size: 12px;
+  }
+  .calc-box .calc-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .calc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    border-bottom: 1px solid #1e1e1e;
+    color: #bbb;
+  }
+  .calc-row:last-child { border-bottom: none; }
+  .calc-row .val { font-family: 'Space Mono', monospace; color: var(--white); font-size: 12px; }
+  .calc-row.total .val { color: var(--accent); font-size: 14px; font-weight: 700; }
+  .calc-row.total { border-top: 1px solid #333; margin-top: 4px; padding-top: 8px; }
+
+  /* MACRO BREAKDOWN TABLE */
+  .macro-detail {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .macro-detail-card {
+    background: #111;
+    border-radius: 8px;
+    padding: 12px;
+    border-left: 3px solid transparent;
+  }
+  .macro-detail-card.pro { border-color: #48c9b0; }
+  .macro-detail-card.carb { border-color: #f0a500; }
+  .macro-detail-card.fat { border-color: #a569bd; }
+  .mdc-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .mdc-name { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-family: 'Space Mono', monospace; }
+  .mdc-val { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; }
+  .mdc-val.pro { color: #48c9b0; }
+  .mdc-val.carb { color: #f0a500; }
+  .mdc-val.fat { color: #a569bd; }
+  .mdc-row { display: flex; justify-content: space-between; font-size: 11px; color: #999; padding: 2px 0; }
+  .mdc-row span { color: #ccc; }
+
+  /* VITAMINS & MINERALS */
+  .micro-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .micro-card {
+    background: #111;
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .micro-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .micro-name { font-size: 13px; font-weight: 500; color: var(--white); }
+  .micro-rda {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    background: #1e1e1e;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+  .micro-why { font-size: 11px; color: #999; margin-bottom: 6px; line-height: 1.4; }
+  .micro-sources { display: flex; flex-wrap: wrap; gap: 4px; }
+  .micro-src {
+    font-size: 10px;
+    background: #1e1e1e;
+    color: #bbb;
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+  .alert-tag {
+    font-size: 10px;
+    background: #3a1a00;
+    color: #f0a500;
+    border: 1px solid #f0a50033;
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+
+  /* SUPPLEMENTS */
+  .supp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .supp-card {
+    background: #111;
+    border-radius: 8px;
+    padding: 12px;
+    border-top: 2px solid transparent;
+  }
+  .supp-card.essential { border-color: var(--accent); }
+  .supp-card.important { border-color: var(--accent2); }
+  .supp-card.optional { border-color: #555; }
+  .supp-name { font-size: 12px; font-weight: 500; color: var(--white); margin-bottom: 3px; }
+  .supp-dose { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--accent2); margin-bottom: 5px; }
+  .supp-why { font-size: 11px; color: #888; line-height: 1.4; }
+  .supp-badge {
+    font-size: 9px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-family: 'Space Mono', monospace;
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+  .badge-essential { background: #e8533c22; color: #e8533c; }
+  .badge-important { background: #f0a50022; color: #f0a500; }
+  .badge-optional { background: #33333355; color: #888; }
+
+  /* WATER */
+  .water-bar-wrap { margin: 12px 0 16px; }
+  .water-bar {
+    height: 10px;
+    background: #1e1e1e;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+  .water-fill {
+    height: 100%;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #1a8fcf, #5dade2);
+  }
+  .water-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>Your Fitness Blueprint</h1>
+    <p>Home · No Equipment · 4 Days/Week · Shoulder-Safe</p>
+  </div>
+  <div class="header-stats">
+    <div class="stat">
+      <div class="stat-val">65<span style="font-size:13px">kg</span></div>
+      <div class="stat-label">Body Weight</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">5.45<span style="font-size:13px">ft</span></div>
+      <div class="stat-label">Height</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">21–30</div>
+      <div class="stat-label">Age</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- WORKOUT SPLIT -->
+  <div>
+    <div class="section-header">
+      <h2>Weekly Split</h2>
+      <span class="tag">4 DAYS / WEEK</span>
+    </div>
+    <div class="days-grid">
+
+      <!-- Day 1 Push -->
+      <div class="day-card">
+        <div class="day-top push">
+          <div class="day-num">01</div>
+          <div class="day-info">
+            <h3>Push Day</h3>
+            <p>Chest · Shoulders · Triceps</p>
+          </div>
+        </div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Wide Push-Ups</span><span class="ex-sets">4 × 15</span></li>
+          <li><span class="ex-name">Incline Push-Ups (hands elevated)</span><span class="ex-sets">3 × 12</span></li>
+          <li><span class="ex-name">Diamond Push-Ups</span><span class="ex-sets">3 × 12</span></li>
+          <li><span class="ex-name">Archer Push-Ups</span><span class="ex-sets">3 × 8 each</span></li>
+          <li><span class="ex-name">Tricep Dips (chair)</span><span class="ex-sets">3 × 15</span></li>
+          <li><span class="ex-name">Lateral Raise (bottles)</span><span class="ex-sets">3 × 15</span></li>
+          <li><span class="ex-name">Pseudo Planche Lean</span><span class="ex-sets">3 × 20s</span></li>
+        </ul>
+      </div>
+
+      <!-- Day 2 Pull -->
+      <div class="day-card">
+        <div class="day-top pull">
+          <div class="day-num">02</div>
+          <div class="day-info">
+            <h3>Pull Day</h3>
+            <p>Back · Biceps · Rear Delt</p>
+          </div>
+        </div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Doorframe / Table Rows</span><span class="ex-sets">4 × 12</span></li>
+          <li><span class="ex-name">Superman Holds</span><span class="ex-sets">4 × 30s</span></li>
+          <li><span class="ex-name">Reverse Snow Angels</span><span class="ex-sets">3 × 15</span></li>
+          <li><span class="ex-name">Towel Bicep Curls</span><span class="ex-sets">3 × 15</span></li>
+          <li><span class="ex-name">Rear Delt Flyes (bottles)</span><span class="ex-sets">3 × 12</span></li>
+          <li><span class="ex-name">Face Pulls (towel)</span><span class="ex-sets">3 × 15</span></li>
+          <li><span class="ex-name">Scapular Push-Ups</span><span class="ex-sets">3 × 15</span></li>
+        </ul>
+      </div>
+
+      <!-- Day 3 Legs -->
+      <div class="day-card">
+        <div class="day-top legs">
+          <div class="day-num">03</div>
+          <div class="day-info">
+            <h3>Leg Day</h3>
+            <p>Quads · Hamstrings · Glutes · Calves</p>
+          </div>
+        </div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Bulgarian Split Squats</span><span class="ex-sets">4 × 12 each</span></li>
+          <li><span class="ex-name">Jump Squats</span><span class="ex-sets">4 × 15</span></li>
+          <li><span class="ex-name">Glute Bridge (weighted bag)</span><span class="ex-sets">4 × 20</span></li>
+          <li><span class="ex-name">Nordic Curls</span><span class="ex-sets">3 × 6</span></li>
+          <li><span class="ex-name">Sissy Squats</span><span class="ex-sets">3 × 10</span></li>
+          <li><span class="ex-name">Single-Leg Calf Raises</span><span class="ex-sets">4 × 20 each</span></li>
+          <li><span class="ex-name">Wall Sit</span><span class="ex-sets">3 × 45s</span></li>
+        </ul>
+      </div>
+
+      <!-- Day 4 Core + Arms -->
+      <div class="day-card">
+        <div class="day-top core">
+          <div class="day-num">04</div>
+          <div class="day-info">
+            <h3>Core + Arms</h3>
+            <p>Abs · Biceps · Triceps</p>
+          </div>
+        </div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Hanging Knee Raises (bar)</span><span class="ex-sets">4 × 15</span></li>
+          <li><span class="ex-name">Bicycle Crunches</span><span class="ex-sets">3 × 20</span></li>
+          <li><span class="ex-name">Plank Shoulder Taps</span><span class="ex-sets">3 × 20</span></li>
+          <li><span class="ex-name">Close-Grip Push-Ups</span><span class="ex-sets">4 × 12</span></li>
+          <li><span class="ex-name">Reverse Curls</span><span class="ex-sets">3 × 15</span></li>
+          <li><span class="ex-name">L-Sit Hold (chairs)</span><span class="ex-sets">3 × 15s</span></li>
+          <li><span class="ex-name">Dead Bug</span><span class="ex-sets">3 × 10 each</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- EXERCISE VISUAL GUIDE -->
+  <div class="exercise-visuals">
+    <div class="section-header">
+      <h2>Exercise Visual Guide</h2>
+      <span class="tag">KEY MOVES</span>
+    </div>
+    <div class="ex-grid">
+
+      <!-- Wide Push-Up -->
+      <div class="ex-card">
+        <div class="ex-figure">
+          <iframe src="https://giphy.com/embed/7YCC7PTNX2TOhJQ6aW" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="ex-card-label">
+          <div class="name">Wide Push-Up</div>
+          <span class="muscle-tag tag-chest">Chest</span>
+          <span class="muscle-tag tag-shoulder">Shoulder</span>
+        </div>
+      </div>
+
+      <!-- Diamond Push-Up -->
+      <div class="ex-card">
+        <div class="ex-figure">
+          <iframe src="https://giphy.com/embed/wLPCOBM8sVCbu" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="ex-card-label">
+          <div class="name">Diamond Push-Up</div>
+          <span class="muscle-tag tag-tricep">Tricep</span>
+          <span class="muscle-tag tag-chest">Inner Chest</span>
+        </div>
+      </div>
+
+      <!-- Archer Push-Up -->
+      <div class="ex-card">
+        <div class="ex-figure">
+          <iframe src="https://giphy.com/embed/VMHlHB183jqD1qZeKv" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="ex-card-label">
+          <div class="name">Archer Push-Up</div>
+          <span class="muscle-tag tag-chest">Chest</span>
+          <span class="muscle-tag tag-shoulder">Delt</span>
+        </div>
+      </div>
+
+      <!-- Chair Dip -->
+      <div class="ex-card">
+        <div class="ex-figure">
+          <iframe src="https://giphy.com/embed/26xBCzMfXwx9WxbS8" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="ex-card-label">
+          <div class="name">Chair Dip</div>
+          <span class="muscle-tag tag-tricep">Tricep</span>
+          <span class="muscle-tag tag-chest">Lower Chest</span>
+        </div>
+      </div>
+
+      <!-- Table Row -->
+      <div class="ex-card">
+        <div class="ex-figure">
+          <iframe src="https://giphy.com/embed/3o7TKFOBiXCUGBcLYs" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="ex-card-label">
+          <div class="name">Table Row</div>
+          <span class="muscle-tag tag-back">Back</span>
+          <span class="muscle-tag tag-bicep">Bicep</span>
+        </div>
+      </div>
+
+      <!-- Bulgarian Split Squat -->
+      <div class="ex-card">
+        <div class="ex-figure">
+          <iframe src="https://giphy.com/embed/g0Kz180GdPYCsKqMyf" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="ex-card-label">
+          <div class="name">Bulgarian Split Squat</div>
+          <span class="muscle-tag tag-legs">Quads</span>
+          <span class="muscle-tag tag-legs">Glutes</span>
+        </div>
+      </div>
+
+      <!-- Nordic Curl -->
+      <div class="ex-card">
+        <div class="ex-figure">
+          <iframe src="https://giphy.com/embed/XEShIQ9VX3qyBbS77g" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="ex-card-label">
+          <div class="name">Nordic Curl</div>
+          <span class="muscle-tag tag-legs">Hamstrings</span>
+        </div>
+      </div>
+
+      <!-- Bicycle Crunch -->
+      <div class="ex-card">
+        <div class="ex-figure">
+          <iframe src="https://giphy.com/embed/l4Ki2wxGEH1RV3eSs" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="ex-card-label">
+          <div class="name">Bicycle Crunch</div>
+          <span class="muscle-tag tag-core">Obliques</span>
+          <span class="muscle-tag tag-core">Abs</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DO's AND DON'Ts -->
+  <div>
+    <div class="section-header">
+      <h2>Do's &amp; Don'ts</h2>
+      <span class="tag">CRITICAL RULES</span>
+    </div>
+    <div class="dos-donts">
+      <div class="do-card">
+        <div class="card-head">
+          <div class="icon">✓</div>
+          <h3>Always Do This</h3>
+        </div>
+        <ul class="rule-list">
+          <li>Warm up 5–10 min before every session (arm circles, hip circles, jumping jacks)</li>
+          <li>Control the movement — go slow on the way down (3 seconds) for more muscle</li>
+          <li>Full range of motion — chest to floor on push-ups, deep on squats</li>
+          <li>Add reps or harder variations every week — this is how you grow</li>
+          <li>Drink 2.5–3 litres of water daily</li>
+          <li>Sleep 7–9 hours — muscles are built during rest, not training</li>
+          <li>Do 10 min flexibility routine daily (keep that mobility)</li>
+          <li>Eat protein within 30–45 min after training</li>
+        </ul>
+      </div>
+      <div class="dont-card">
+        <div class="card-head">
+          <div class="icon">✗</div>
+          <h3>Never Do This</h3>
+        </div>
+        <ul class="rule-list">
+          <li>Skip rest days — overtraining kills progress and injures you</li>
+          <li>Rush through reps for high numbers — slow controlled reps = more muscle</li>
+          <li>Train through shoulder pain — stop immediately if sharp pain occurs</li>
+          <li>Skip leg day — legs trigger most testosterone, skipping slows overall growth</li>
+          <li>Do overhead pressing movements if shoulder hurts (pike push-ups, military press)</li>
+          <li>Eat less than 100g protein daily — you'll lose muscle instead of building it</li>
+          <li>Train the same muscle two days in a row — muscles need 48h to recover</li>
+          <li>Compare your 2-week progress to someone's 2-year body</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHOULDER WARNING -->
+  <div class="shoulder-warn">
+    <div class="warn-icon">⚠️</div>
+    <div class="warn-content">
+      <h4>Shoulder Issues — Avoid These Completely</h4>
+      <ul class="warn-list">
+        <li>Overhead pressing (pain-free range only)</li>
+        <li>Wide-grip dips (elbows flared out)</li>
+        <li>Behind-the-neck movements</li>
+        <li>Wall handstands (skip until healed)</li>
+        <li>Heavy upright rows</li>
+        <li>Lateral raises above shoulder height</li>
+        <li>Sleeping on painful shoulder</li>
+      </ul>
+      <p style="font-size:11.5px; color: #888; margin-top:10px;">Instead: Do <strong style="color:#f0c080">scapular push-ups</strong>, <strong style="color:#f0c080">face pulls</strong>, and <strong style="color:#f0c080">band external rotations</strong> to strengthen and rehab the shoulder safely.</p>
+    </div>
+  </div>
+
+  <!-- NUTRITION -->
+  <div class="nutrition">
+    <div class="section-header">
+      <h2>Nutrition Plan</h2>
+      <span class="tag">65KG · SKINNY-FAT · RECOMP</span>
+    </div>
+
+    <!-- CALORIE CALCULATION -->
+    <p class="sub-label" style="margin-top:0">How your calories are calculated (Mifflin-St Jeor)</p>
+    <div class="calc-box">
+      <div class="calc-title">Step-by-step TDEE calculation</div>
+      <div class="calc-row"><span>BMR = (10 × 65kg) + (6.25 × 166cm) − (5 × 25) + 5</span><span class="val">1,568 kcal</span></div>
+      <div class="calc-row"><span>Activity multiplier (4 days/week training) × 1.55</span><span class="val">2,430 kcal</span></div>
+      <div class="calc-row"><span>10% recomp deficit (build muscle + lose fat)</span><span class="val">−230 kcal</span></div>
+      <div class="calc-row total"><span>Your daily target</span><span class="val">2,200 kcal</span></div>
+      <div style="margin-top:10px; font-size:11px; color:#777; line-height:1.5">
+        Training days: eat <span style="color:#f0a500">2,300 kcal</span> &nbsp;·&nbsp; Rest days: eat <span style="color:#5dade2">2,100 kcal</span> &nbsp;·&nbsp; Never go below 1,800 kcal
+      </div>
+    </div>
+
+    <!-- MACRO TARGETS -->
+    <div class="macro-row">
+      <div class="macro-card">
+        <div class="macro-val cal">2,200</div>
+        <div class="macro-name">Calories / day</div>
+      </div>
+      <div class="macro-card">
+        <div class="macro-val pro">130g</div>
+        <div class="macro-name">Protein · 24%</div>
+      </div>
+      <div class="macro-card">
+        <div class="macro-val carb">260g</div>
+        <div class="macro-name">Carbs · 47%</div>
+      </div>
+      <div class="macro-card">
+        <div class="macro-val fat">70g</div>
+        <div class="macro-name">Fats · 29%</div>
+      </div>
+    </div>
+
+    <!-- MACRO BREAKDOWN -->
+    <p class="sub-label">Macro breakdown & why</p>
+    <div class="macro-detail">
+      <div class="macro-detail-card pro">
+        <div class="mdc-head">
+          <span class="mdc-name">Protein</span>
+          <span class="mdc-val pro">130g</span>
+        </div>
+        <div class="mdc-row">Target <span>2.0g per kg bodyweight</span></div>
+        <div class="mdc-row">Per meal (5 meals) <span>~26g each</span></div>
+        <div class="mdc-row">Post-workout <span>30–40g within 2hr</span></div>
+        <div class="mdc-row">Before bed <span>30g slow protein (paneer/curd)</span></div>
+        <div class="mdc-row" style="margin-top:6px; color:#48c9b0; font-size:10px;">Top sources: soya chunks (52g/100g), dal (25g), paneer (18g), eggs (13g)</div>
+      </div>
+      <div class="macro-detail-card carb">
+        <div class="mdc-head">
+          <span class="mdc-name">Carbs</span>
+          <span class="mdc-val carb">260g</span>
+        </div>
+        <div class="mdc-row">Training days <span>280–300g</span></div>
+        <div class="mdc-row">Rest days <span>220–240g</span></div>
+        <div class="mdc-row">Complex (80%) <span>rice, roti, oats, dal</span></div>
+        <div class="mdc-row">Simple (20%) <span>banana, fruit, post-workout</span></div>
+        <div class="mdc-row" style="margin-top:6px; color:#f0a500; font-size:10px;">Pre-workout: 40–60g complex carbs 1.5hr before training</div>
+      </div>
+      <div class="macro-detail-card fat">
+        <div class="mdc-head">
+          <span class="mdc-name">Fats</span>
+          <span class="mdc-val fat">70g</span>
+        </div>
+        <div class="mdc-row">Saturated (max) <span>≤20g — ghee, paneer</span></div>
+        <div class="mdc-row">Monounsaturated <span>~30g — peanuts, almonds</span></div>
+        <div class="mdc-row">Polyunsaturated <span>~20g — flaxseed, walnuts</span></div>
+        <div class="mdc-row">Omega-3 (EPA+DHA) <span>250–500mg/day</span></div>
+        <div class="mdc-row" style="margin-top:6px; color:#a569bd; font-size:10px;">Critical for testosterone. Never go below 20% of calories from fat.</div>
+      </div>
+    </div>
+
+    <!-- MEAL PLAN -->
+    <p class="sub-label">Daily meal plan (Indian diet)</p>
+    <div class="meal-grid">
+      <div class="meal-card">
+        <div class="meal-time breakfast">BREAKFAST — 7–8 AM</div>
+        <ul class="meal-items">
+          <li>Whole eggs <span>3 eggs → 18g protein</span></li>
+          <li>Oats or roti <span>2 medium → 40g carbs</span></li>
+          <li>Banana <span>1 medium → quick energy</span></li>
+          <li>Milk <span>1 glass → 8g protein</span></li>
+        </ul>
+      </div>
+      <div class="meal-card">
+        <div class="meal-time lunch">LUNCH — 1–2 PM</div>
+        <ul class="meal-items">
+          <li>Rice or roti <span>2 cups / 3 roti</span></li>
+          <li>Dal / Chicken / Paneer <span>150–200g → 30g protein</span></li>
+          <li>Vegetables (sabzi) <span>1 bowl</span></li>
+          <li>Curd/Dahi <span>100g → 6g protein</span></li>
+        </ul>
+      </div>
+      <div class="meal-card">
+        <div class="meal-time pre">PRE-WORKOUT — 30 min before</div>
+        <ul class="meal-items">
+          <li>Banana <span>1 large → fast carbs</span></li>
+          <li>Peanut butter <span>1 tbsp → healthy fat</span></li>
+          <li>Coffee (optional) <span>natural pre-workout</span></li>
+        </ul>
+      </div>
+      <div class="meal-card">
+        <div class="meal-time post">POST-WORKOUT — within 30 min</div>
+        <ul class="meal-items">
+          <li>Eggs <span>3–4 boiled → 25g protein</span></li>
+          <li>Rice / bread <span>replenish glycogen</span></li>
+          <li>OR Milk + banana <span>quick protein+carb</span></li>
+        </ul>
+      </div>
+      <div class="meal-card">
+        <div class="meal-time dinner">DINNER — 7–8 PM</div>
+        <ul class="meal-items">
+          <li>Chicken / Fish / Paneer <span>200g → 35g protein</span></li>
+          <li>2 roti or 1 cup rice <span>moderate carbs</span></li>
+          <li>Salad + turmeric+pepper <span>anti-inflammatory</span></li>
+        </ul>
+      </div>
+      <div class="meal-card">
+        <div class="meal-time snack">SNACK — before bed</div>
+        <ul class="meal-items">
+          <li>Hung curd / Paneer <span>200g → 20g slow protein</span></li>
+          <li>Handful of peanuts <span>healthy fats</span></li>
+          <li>OR 2 boiled eggs <span>16g protein overnight</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- VITAMINS -->
+    <p class="sub-label">Key vitamins for muscle growth</p>
+    <div class="micro-grid">
+      <div class="micro-card">
+        <div class="micro-head">
+          <span class="micro-name">Vitamin D3</span>
+          <span class="micro-rda">1,000–2,000 IU/day</span>
+        </div>
+        <div class="micro-why">Controls calcium absorption, testosterone, protein synthesis. 27–60% of South Asians are severely deficient — supplement is non-negotiable.</div>
+        <div class="micro-sources">
+          <span class="micro-src">D3 supplement (with fat)</span>
+          <span class="micro-src">Egg yolk</span>
+          <span class="micro-src">15–30 min sun daily</span>
+          <span class="alert-tag">⚠ Must supplement</span>
+        </div>
+      </div>
+      <div class="micro-card">
+        <div class="micro-head">
+          <span class="micro-name">Vitamin B12</span>
+          <span class="micro-rda">2.4 mcg/day</span>
+        </div>
+        <div class="micro-why">Essential for red blood cell formation, energy metabolism, and nerve function. 35% of Indian vegetarians are deficient.</div>
+        <div class="micro-sources">
+          <span class="micro-src">Eggs</span>
+          <span class="micro-src">Milk / curd</span>
+          <span class="micro-src">Fortified cereals</span>
+          <span class="alert-tag">⚠ Supplement if veg</span>
+        </div>
+      </div>
+      <div class="micro-card">
+        <div class="micro-head">
+          <span class="micro-name">Vitamin C</span>
+          <span class="micro-rda">90 mg/day</span>
+        </div>
+        <div class="micro-why">Collagen synthesis for muscle repair. Boosts iron absorption by up to 6× when eaten together. One amla (gooseberry) = 600–800 mg.</div>
+        <div class="micro-sources">
+          <span class="micro-src">Amla / gooseberry</span>
+          <span class="micro-src">Guava</span>
+          <span class="micro-src">Bell pepper</span>
+          <span class="micro-src">Lemon on dal</span>
+        </div>
+      </div>
+      <div class="micro-card">
+        <div class="micro-head">
+          <span class="micro-name">Vitamin B6 + Folate</span>
+          <span class="micro-rda">1.3 mg / 400 mcg</span>
+        </div>
+        <div class="micro-why">B6 is essential for protein metabolism — it processes every gram of protein you eat. Folate supports DNA synthesis and new muscle cell creation.</div>
+        <div class="micro-sources">
+          <span class="micro-src">Chickpeas</span>
+          <span class="micro-src">Banana</span>
+          <span class="micro-src">Spinach</span>
+          <span class="micro-src">Lentils</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MINERALS -->
+    <p class="sub-label">Key minerals</p>
+    <div class="micro-grid">
+      <div class="micro-card">
+        <div class="micro-head">
+          <span class="micro-name">Iron</span>
+          <span class="micro-rda">8 mg/day</span>
+        </div>
+        <div class="micro-why">Carries oxygen to muscles. Deficiency = fatigue during workouts. Cook in cast iron. Pair with Vitamin C to boost absorption 6×.</div>
+        <div class="micro-sources">
+          <span class="micro-src">Spinach</span>
+          <span class="micro-src">Dal / lentils</span>
+          <span class="micro-src">Jaggery</span>
+          <span class="micro-src">Pumpkin seeds</span>
+          <span class="alert-tag">⚠ Avoid tea near meals</span>
+        </div>
+      </div>
+      <div class="micro-card">
+        <div class="micro-head">
+          <span class="micro-name">Zinc</span>
+          <span class="micro-rda">11 mg/day (+50% if veg)</span>
+        </div>
+        <div class="micro-why">Critical for testosterone production and protein synthesis. Lost through sweat. Vegetarians need 50% more due to phytate interference.</div>
+        <div class="micro-sources">
+          <span class="micro-src">Pumpkin seeds</span>
+          <span class="micro-src">Chickpeas</span>
+          <span class="micro-src">Cashews</span>
+          <span class="micro-src">Paneer</span>
+        </div>
+      </div>
+      <div class="micro-card">
+        <div class="micro-head">
+          <span class="micro-name">Magnesium</span>
+          <span class="micro-rda">400 mg/day</span>
+        </div>
+        <div class="micro-why">Powers 300+ enzymatic reactions including protein synthesis. Supports sleep quality and recovery. Many active people are deficient.</div>
+        <div class="micro-sources">
+          <span class="micro-src">Pumpkin seeds (150mg/30g)</span>
+          <span class="micro-src">Almonds</span>
+          <span class="micro-src">Spinach</span>
+          <span class="micro-src">Dark chocolate</span>
+        </div>
+      </div>
+      <div class="micro-card">
+        <div class="micro-head">
+          <span class="micro-name">Calcium</span>
+          <span class="micro-rda">1,000 mg/day</span>
+        </div>
+        <div class="micro-why">Required for every muscle contraction. 60–70% of South Asians are lactose intolerant. Ragi (finger millet) is an outstanding non-dairy source.</div>
+        <div class="micro-sources">
+          <span class="micro-src">Ragi (344mg/100g)</span>
+          <span class="micro-src">Sesame seeds</span>
+          <span class="micro-src">Curd / Dahi</span>
+          <span class="micro-src">Paneer</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WATER -->
+    <p class="sub-label">Water intake</p>
+    <div class="water-bar-wrap">
+      <div style="display:flex; justify-content:space-between; font-size:12px; color:#bbb; margin-bottom:4px">
+        <span>Daily target: <strong style="color:#5dade2">3.0–4.0 litres</strong></span>
+        <span style="font-size:11px; color:#888">Training days: 3.5–4.0L &nbsp;·&nbsp; Rest days: 3.0L</span>
+      </div>
+      <div class="water-bar"><div class="water-fill" style="width:80%"></div></div>
+      <div class="water-labels">
+        <span>Morning (0.5L)</span>
+        <span>Pre-workout (0.5L)</span>
+        <span>During workout (0.5L)</span>
+        <span>Post-workout (0.75L)</span>
+        <span>Evening (0.75L)</span>
+      </div>
+      <div style="margin-top:8px; font-size:11px; color:#666">Coconut water, nimbu pani, and chaas (buttermilk) are excellent electrolyte sources for hot climate training.</div>
+    </div>
+
+    <!-- SUPPLEMENTS -->
+    <p class="sub-label">Supplements (priority order)</p>
+    <div class="supp-grid">
+      <div class="supp-card essential">
+        <span class="supp-badge badge-essential">ESSENTIAL</span>
+        <div class="supp-name">Creatine Monohydrate</div>
+        <div class="supp-dose">5g/day — any time with water</div>
+        <div class="supp-why">Most researched supplement. Adds ~1.4kg lean mass. Load 20g/day for 5 days, then 5g maintenance. Safe long-term.</div>
+      </div>
+      <div class="supp-card essential">
+        <span class="supp-badge badge-essential">ESSENTIAL</span>
+        <div class="supp-name">Vitamin D3</div>
+        <div class="supp-dose">1,000–2,000 IU/day with food</div>
+        <div class="supp-why">Non-negotiable for South Asians. Darker skin reduces UV synthesis. Take with a fat-containing meal for absorption.</div>
+      </div>
+      <div class="supp-card important">
+        <span class="supp-badge badge-important">IMPORTANT</span>
+        <div class="supp-name">Vitamin B12</div>
+        <div class="supp-dose">250–500 mcg methylcobalamin daily</div>
+        <div class="supp-why">Critical if vegetarian. Energy, red blood cells, nerve health. Methylcobalamin form is better absorbed than cyanocobalamin.</div>
+      </div>
+      <div class="supp-card important">
+        <span class="supp-badge badge-important">IMPORTANT</span>
+        <div class="supp-name">Whey Protein</div>
+        <div class="supp-dose">1–2 scoops/day (~25–50g protein)</div>
+        <div class="supp-why">Practical for hitting 130g daily protein target. Post-workout is the best time. Plant protein (pea+rice blend) for vegetarians.</div>
+      </div>
+      <div class="supp-card important">
+        <span class="supp-badge badge-important">IMPORTANT</span>
+        <div class="supp-name">Omega-3 / Fish Oil</div>
+        <div class="supp-dose">250–500 mg EPA+DHA daily</div>
+        <div class="supp-why">Reduces inflammation, supports joint health (critical with shoulder issue), improves muscle recovery. Algae-based for vegetarians.</div>
+      </div>
+      <div class="supp-card optional">
+        <span class="supp-badge badge-optional">OPTIONAL</span>
+        <div class="supp-name">Magnesium Glycinate</div>
+        <div class="supp-dose">200–400 mg before bed</div>
+        <div class="supp-why">Improves sleep quality and recovery overnight. Glycinate form is gentler on stomach. Bonus: supports 300+ muscle enzymes.</div>
+      </div>
+    </div>
+
+    <!-- Eat / Avoid -->
+    <div class="two-col" style="margin-top: 16px;">
+      <div>
+        <p class="sub-label">Best foods to eat</p>
+        <div class="food-avoid">
+          <span class="eat-tag">Soya chunks</span>
+          <span class="eat-tag">Eggs</span>
+          <span class="eat-tag">Chicken</span>
+          <span class="eat-tag">Paneer</span>
+          <span class="eat-tag">Dal / Lentils</span>
+          <span class="eat-tag">Dahi / Curd</span>
+          <span class="eat-tag">Fish</span>
+          <span class="eat-tag">Ragi / Millet</span>
+          <span class="eat-tag">Oats</span>
+          <span class="eat-tag">Rice (post-workout)</span>
+          <span class="eat-tag">Banana</span>
+          <span class="eat-tag">Sweet Potato</span>
+          <span class="eat-tag">Peanut Butter</span>
+          <span class="eat-tag">Almonds + Pumpkin seeds</span>
+          <span class="eat-tag">Amla / Gooseberry</span>
+          <span class="eat-tag">Turmeric + black pepper</span>
+        </div>
+      </div>
+      <div>
+        <p class="sub-label">Strictly avoid</p>
+        <div class="food-avoid">
+          <span class="avoid-tag">Soft drinks / Soda</span>
+          <span class="avoid-tag">Maida / White bread</span>
+          <span class="avoid-tag">Chips &amp; Namkeen</span>
+          <span class="avoid-tag">Fried foods daily</span>
+          <span class="avoid-tag">Excess sugar / Mithai</span>
+          <span class="avoid-tag">Alcohol</span>
+          <span class="avoid-tag">Instant noodles</span>
+          <span class="avoid-tag">Packaged juice</span>
+          <span class="avoid-tag">Skipping meals</span>
+          <span class="avoid-tag">Tea/coffee within 1hr of iron-rich food</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLEXIBILITY SECTION -->
+  <div class="flex-section">
+    <div class="section-header">
+      <h2>Daily Flexibility (10 min)</h2>
+      <span class="tag">EVERY DAY · KEEPS MOBILITY</span>
+    </div>
+    <div class="flex-grid">
+      <div class="flex-item">
+        <div class="stretch-icon">🧎</div>
+        <div class="stretch-name">Hip Flexor Stretch</div>
+        <div class="stretch-time">30s each side</div>
+      </div>
+      <div class="flex-item">
+        <div class="stretch-icon">🔄</div>
+        <div class="stretch-name">Thoracic Rotation</div>
+        <div class="stretch-time">10 reps each</div>
+      </div>
+      <div class="flex-item">
+        <div class="stretch-icon">🦁</div>
+        <div class="stretch-name">World's Greatest Stretch</div>
+        <div class="stretch-time">5 each side</div>
+      </div>
+      <div class="flex-item">
+        <div class="stretch-icon">🏋️</div>
+        <div class="stretch-name">Deep Squat Hold</div>
+        <div class="stretch-time">60 seconds</div>
+      </div>
+      <div class="flex-item">
+        <div class="stretch-icon">🙆</div>
+        <div class="stretch-name">Shoulder Dislocates</div>
+        <div class="stretch-time">10 slow reps</div>
+      </div>
+      <div class="flex-item">
+        <div class="stretch-icon">🐈</div>
+        <div class="stretch-name">Cat-Cow</div>
+        <div class="stretch-time">10 reps</div>
+      </div>
+      <div class="flex-item">
+        <div class="stretch-icon">🧘</div>
+        <div class="stretch-name">Pigeon Pose</div>
+        <div class="stretch-time">40s each side</div>
+      </div>
+      <div class="flex-item">
+        <div class="stretch-icon">🤸</div>
+        <div class="stretch-name">Child's Pose</div>
+        <div class="stretch-time">45 seconds</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPECTED PROGRESS -->
+  <div class="progress-section">
+    <div class="section-header">
+      <h2>What to Expect</h2>
+      <span class="tag">REALISTIC TIMELINE</span>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-week">WEEK 1–2</div>
+        <div class="timeline-result">Body adjusting. Soreness is normal. Energy up. Belly softening begins.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot w4"></div>
+        <div class="timeline-week">WEEK 4–5</div>
+        <div class="timeline-result">Visible pump and muscle hardness. Chest and arms noticeably fuller. Waist tighter.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot w8"></div>
+        <div class="timeline-week">WEEK 8–10</div>
+        <div class="timeline-result">Shoulder width visible. Core lines showing. Legs growing. People will notice.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot w12"></div>
+        <div class="timeline-week">WEEK 12+</div>
+        <div class="timeline-result">Full body transformation visible. 4-pack clear, broad upper body, thick legs.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>Personal Blueprint · <span class="accent">65kg / 5.45ft / Age 21–30</span> · Shoulder-Safe · Home Training</p>
+  <p style="color:#444">CONSISTENCY > PERFECTION · TRUST THE PROCESS</p>
+</div>
+
+</body>
+</html>
